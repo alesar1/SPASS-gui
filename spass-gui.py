@@ -1,13 +1,16 @@
+#!/usr/bin/env python3
+
 import subprocess
-from PyQt6.QtWidgets import *
-from PyQt6 import uic
+import sys
+from PySide6.QtUiTools import QUiLoader
+from PySide6.QtWidgets import *
+from ui_mainwindow import Ui_MainWindow
 
 
-class MainWindow(QMainWindow):
+class MainWindow(QMainWindow, Ui_MainWindow):
     def __init__(self):
         super().__init__()
-        uic.loadUi("mainwindow.ui", self)
-        self.show()
+        self.setupUi(self)
 
         self.actionOpen.triggered.connect(self.openFile)
         self.actionSave.triggered.connect(self.saveFile)
@@ -69,9 +72,10 @@ class MainWindow(QMainWindow):
 
 
 def main():
-    app = QApplication([])
+    app = QApplication(sys.argv)
     window = MainWindow()
     window.setWindowTitle("SPASS")
+    window.show()
     app.exec()
 
 
