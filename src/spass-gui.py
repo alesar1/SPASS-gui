@@ -37,7 +37,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             with f:
                 text = self.textSrcCode.toPlainText()
                 f.write(text)
-        except:
+        except NameError:
             print("No file opened")
             message = QMessageBox()
             message.setText("No File Opened")
