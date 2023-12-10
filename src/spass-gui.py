@@ -2,8 +2,10 @@
 
 import subprocess
 import sys
-from PySide6.QtUiTools import QUiLoader
-from PySide6.QtWidgets import *
+
+from PySide6.QtWidgets import (QApplication, QFileDialog, QMainWindow,
+                               QMessageBox)
+
 from ui.ui_mainwindow import Ui_MainWindow
 
 
