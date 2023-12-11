@@ -3,8 +3,7 @@
 import subprocess
 import sys
 
-from PySide6.QtWidgets import (QApplication, QFileDialog, QMainWindow,
-                               QMessageBox)
+from PySide6.QtWidgets import QApplication, QFileDialog, QMainWindow, QMessageBox
 
 from ui.ui_mainwindow import Ui_MainWindow
 
@@ -22,19 +21,18 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
     def openFile(self):
         global filename
-        filename = QFileDialog.getOpenFileName(self, "Open File", "", "All Files (*.*)")
-        if filename[0] == "":
+        fn = QFileDialog.getOpenFileName(self, "Open File", "", "All Files (*.*)")
+        if fn[0] == "":
             return
-        f = open(filename[0], "r")
-        with f:
+        filename = fn
+        with open(filename[0], "r") as f:
             data = f.read()
             self.textSrcCode.setText(data)
 
     def saveFile(self):
         global filename
         try:
-            f = open(filename[0], "w")
-            with f:
+            with open(filename[0], "w") as f:
                 text = self.textSrcCode.toPlainText()
                 f.write(text)
         except NameError:
@@ -51,11 +49,11 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             message.setText("No Text to Save")
             message.exec()
             return
-        filename = QFileDialog.getSaveFileName(self, "Save File", "", "All Files (*.*)")
+        fn = QFileDialog.getSaveFileName(self, "Save File", "", "All Files (*.*)")
         if filename[0] == "":
             return
-        f = open(filename[0], "w")
-        with f:
+        filename = fn
+        with open(filename[0], "w") as f:
             text = self.textSrcCode.toPlainText()
             f.write(text)
 
