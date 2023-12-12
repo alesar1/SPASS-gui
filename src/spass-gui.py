@@ -28,18 +28,26 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         with open(filename[0], "r") as f:
             data = f.read()
             self.textSrcCode.setText(data)
+        self.statusBar().showMessage("File Opened: " + filename[0])
 
     def saveFile(self):
         global filename
-        try:
-            with open(filename[0], "w") as f:
-                text = self.textSrcCode.toPlainText()
-                f.write(text)
-        except NameError:
+        if filename[0] == "":
             print("No file opened")
             message = QMessageBox()
             message.setText("No File Opened")
             message.exec()
+            return
+        if self.textSrcCode.toPlainText() == "":
+            print("No text to save")
+            message = QMessageBox()
+            message.setText("No Text to Save")
+            message.exec()
+            return
+        with open(filename[0], "w") as f:
+            text = self.textSrcCode.toPlainText()
+            f.write(text)
+        self.statusBar().showMessage("File Saved: " + filename[0])
 
     def saveFileAs(self):
         global filename
@@ -56,6 +64,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         with open(filename[0], "w") as f:
             text = self.textSrcCode.toPlainText()
             f.write(text)
+        self.statusBar().showMessage("File Saved: " + filename[0])
 
     def runCode(self):
         code = self.textSrcCode.toPlainText()
